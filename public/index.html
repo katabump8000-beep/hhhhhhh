@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14060b">
+<title>الجيسي</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👑</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14060b;--p1:#1f0a12;--p2:#2b0f1a;--line:#4a1a2a;--wine:#7a1634;--wine2:#a3224a;--gold:#d9b46a;--tx:#f3e6e9;--mu:#b99aa4;--ok:#5fcf9a;--er:#ff7b7b;--r:14px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font:15px/1.6 Tajawal,system-ui,sans-serif}
+body{background:radial-gradient(900px 500px at 85% -10%,#3a0f21 0,transparent 60%),var(--bg);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+h1,h2,h3,.brand{font-family:Amiri,serif;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--p2);border-radius:10px;padding:9px 14px;transition:.15s}
+button:hover{border-color:var(--gold)}button:active{transform:scale(.97)}
+button.pri{background:linear-gradient(180deg,var(--wine2),var(--wine));border-color:#c4486f;font-weight:700}
+button.gold{border-color:var(--gold);color:var(--gold)}button.dng{border-color:#7d2b2b;color:var(--er)}
+button:disabled{opacity:.45;pointer-events:none}
+input,select,textarea{width:100%;background:#0f0408;border:1px solid var(--line);border-radius:10px;padding:10px 12px;outline:none}
+input:focus,select:focus,textarea:focus,button:focus-visible{border-color:var(--gold);box-shadow:0 0 0 2px #d9b46a33}
+.wrap{max-width:820px;margin:0 auto;padding:14px}
+.top{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#14060bee;backdrop-filter:blur(8px);z-index:5}
+.brand{font-size:26px;color:var(--gold);flex:1;letter-spacing:.5px}
+.card{background:linear-gradient(180deg,var(--p2),var(--p1));border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:12px 0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.grow{flex:1}
+.dot{width:10px;height:10px;border-radius:50%;background:#6b4a54;display:inline-block}.dot.on{background:var(--ok);box-shadow:0 0 10px var(--ok)}.dot.busy{background:var(--gold)}
+.mu{color:var(--mu);font-size:13px}.ltr{direction:ltr;unicode-bidi:plaintext}
+/* login */
+#login{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center}
+#login .crown{font-size:64px;filter:drop-shadow(0 4px 18px #d9b46a66)}
+#login h1{font-size:54px;color:var(--gold)}
+#login form{width:min(340px,100%);display:flex;flex-direction:column;gap:10px}
+#login input{text-align:center;font-size:18px;padding:13px}
+/* tabs */
+.tabs{position:fixed;bottom:0;inset-inline:0;display:flex;background:#1a0710f2;backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:6}
+.tabs button{flex:1;border:0;background:none;border-radius:10px;font-size:12.5px;color:var(--mu);padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tabs button span{font-size:19px}.tabs button.on{color:var(--gold);background:#d9b46a14}
+main{padding-bottom:90px}
+/* console */
+#term{background:#0b0307;border:1px solid var(--line);border-radius:12px;height:48vh;min-height:260px;overflow:auto;padding:10px;font:12.5px/1.55 ui-monospace,Menlo,Consolas,monospace;direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word}
+#term .err{color:#ff9a9a}#term .sys{color:var(--gold)}#term .out{color:#e9d9dd}
+/* files */
+.f{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid #3a1522}.f:last-child{border:0}
+.f .n{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;direction:ltr;text-align:right}
+.f .i{font-size:20px}.f .m{padding:4px 10px;font-size:20px;line-height:1}
+.crumb{direction:ltr;text-align:left;color:var(--gold);font-size:13px;overflow:auto;white-space:nowrap}
+.crumb a{cursor:pointer;text-decoration:underline dotted}
+#editor{position:fixed;inset:0;background:var(--bg);z-index:20;display:flex;flex-direction:column}
+#editor textarea{flex:1;border-radius:0;border:0;direction:ltr;text-align:left;font:13px/1.55 ui-monospace,Menlo,Consolas,monospace;resize:none;tab-size:2}
+/* sheet / dialog */
+.shade{position:fixed;inset:0;background:#000a;z-index:30;display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:min(560px,100%);background:var(--p1);border:1px solid var(--line);border-radius:18px 18px 0 0;padding:14px 14px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px;max-height:80vh;overflow:auto;animation:up .18s ease-out}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+.sheet h3{color:var(--gold);font-size:20px}
+.kv{display:flex;gap:6px;margin-bottom:8px}.kv input:first-child{direction:ltr;flex:.9}.kv input:nth-child(2){direction:ltr;flex:1.4}
+/* ai */
+#chat{display:flex;flex-direction:column;gap:10px;min-height:40vh}
+.b{padding:10px 13px;border-radius:14px;max-width:92%;white-space:pre-wrap;word-break:break-word}
+.b.u{background:var(--wine);align-self:flex-start;border-end-start-radius:4px}.b.a{background:var(--p2);border:1px solid var(--line);align-self:flex-end;border-end-end-radius:4px}
+.toast{position:fixed;top:calc(14px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);background:var(--p2);border:1px solid var(--gold);padding:9px 16px;border-radius:12px;z-index:50;box-shadow:0 8px 30px #000a}
+.toast.er{border-color:var(--er);color:var(--er)}
+label{display:block;margin:10px 0 4px;color:var(--mu);font-size:13px}
+.sw{display:flex;align-items:center;justify-content:space-between;padding:8px 0}.sw input{width:auto;transform:scale(1.4)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const S={projects:[],cur:null,tab:'console',path:'',lines:[],chat:[],file:null,es:null,poll:null,sound:localStorage.getItem('snd')!=='0'};
+
+/* ---- أصوات ---- */
+let AC;function tone(seq){if(!S.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();let t=AC.currentTime;for(const[f,d]of seq){const o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.07,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g).connect(AC.destination);o.start(t);o.stop(t+d);t+=d*.8}}catch{}}
+const snd={click:()=>tone([[520,.05]]),ok:()=>tone([[520,.09],[780,.14]]),err:()=>tone([[300,.12],[200,.2]])};
+document.addEventListener('click',e=>{if(e.target.closest('button'))snd.click()});
+
+/* ---- أدوات واجهة ---- */
+function toast(m,er){snd[er?'err':'ok']();const t=document.createElement('div');t.className='toast'+(er?' er':'');t.textContent=m;document.body.append(t);setTimeout(()=>t.remove(),2600)}
+async function api(u,o={}){const r=await fetch(u,{credentials:'same-origin',...o,headers:{'Content-Type':'application/json',...(o.headers||{})},body:o.body&&typeof o.body!=='string'&&!(o.body instanceof Blob)?JSON.stringify(o.body):o.body});
+  if(r.status===401&&u!=='/api/login'){showLogin();throw new Error('login')}
+  const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'خطأ');return j}
+const call=async(f,ok)=>{try{const r=await f();if(ok)toast(ok);return r}catch(e){if(e.message!=='login')toast(e.message,1)}};
+function sheet(title,html,bind){const s=document.createElement('div');s.className='shade';s.innerHTML=`<div class="sheet"><h3>${esc(title)}</h3>${html}</div>`;s.onclick=e=>{if(e.target===s)s.remove()};document.body.append(s);bind&&bind(s.firstChild,()=>s.remove());return s}
+const menu=(title,items)=>sheet(title,items.map((x,i)=>`<button data-i="${i}" class="${x[2]||''}">${x[0]}</button>`).join(''),(b,close)=>b.querySelectorAll('button').forEach(el=>el.onclick=()=>{close();items[el.dataset.i][1]()}));
+const ask=(title,val='',ph='')=>new Promise(res=>sheet(title,`<input id="q" value="${esc(val)}" placeholder="${esc(ph)}" dir="auto"><div class="row"><button class="pri grow" id="ok">موافق</button><button id="no">إلغاء</button></div>`,(b,close)=>{const q=b.querySelector('#q');setTimeout(()=>q.focus(),50);b.querySelector('#ok').onclick=()=>{close();res(q.value.trim())};b.querySelector('#no').onclick=()=>{close();res(null)};q.onkeydown=e=>{if(e.key==='Enter'){close();res(q.value.trim())}}}));
+const sure=(t)=>new Promise(res=>sheet(t,`<div class="row"><button class="dng grow" id="y">نعم، تأكيد</button><button class="grow" id="n">إلغاء</button></div>`,(b,c)=>{b.querySelector('#y').onclick=()=>{c();res(true)};b.querySelector('#n').onclick=()=>{c();res(false)}}));
+async function copy(t){try{await navigator.clipboard.writeText(t)}catch{const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();document.execCommand('copy');a.remove()}toast('تم النسخ')}
+const fmtUp=s=>s>3600?`${Math.floor(s/3600)}س ${Math.floor(s%3600/60)}د`:s>60?`${Math.floor(s/60)}د ${s%60}ث`:`${s}ث`;
+
+/* ---- الدخول ---- */
+function showLogin(){clearInterval(S.poll);S.es?.close();app.innerHTML=`<div id="login"><div class="crown">👑</div><h1>الجيسي</h1><div class="mu">منصة تشغيل خاصة</div>
+<form id="lf"><input id="pw" type="password" placeholder="كلمة السر" autocomplete="current-password" autofocus><button class="pri" style="padding:13px;font-size:17px">دخول</button></form></div>`;
+  $('#lf').onsubmit=async e=>{e.preventDefault();try{await api('/api/login',{method:'POST',body:{password:$('#pw').value}});snd.ok();home()}catch(x){toast(x.message,1);$('#pw').select()}}}
+
+/* ---- الرئيسية ---- */
+function topbar(back){return `<div class="top">${back?'<button id="bk">→</button>':''}<div class="brand">${back?esc(back):'👑 الجيسي'}</div><button id="sn" title="الصوت">${S.sound?'🔊':'🔇'}</button><button id="lo">خروج</button></div>`}
+function bindTop(){$('#sn').onclick=()=>{S.sound=!S.sound;localStorage.setItem('snd',S.sound?'1':'0');$('#sn').textContent=S.sound?'🔊':'🔇'};$('#lo').onclick=async()=>{await api('/api/logout',{method:'POST'});showLogin()}}
+async function home(){S.es?.close();S.cur=null;clearInterval(S.poll);
+  app.innerHTML=topbar()+`<div class="wrap"><div class="row"><h2 class="grow">مشاريعك</h2><button class="pri" id="nw">+ إنشاء</button></div><div id="pl"></div></div>`;bindTop();
+  $('#nw').onclick=async()=>{const n=await ask('اسم المشروع');if(!n)return;const c=await ask('أمر التشغيل','npm start','مثال: node index.js');if(c===null)return;const p=await call(()=>api('/api/projects',{method:'POST',body:{name:n,cmd:c||'npm start'}}),'تم إنشاء المشروع');if(p)open(p.id)};
+  const draw=async()=>{const r=await call(()=>api('/api/projects'));if(!r||S.cur)return;S.projects=r.projects;
+    $('#pl').innerHTML=(r.persistent?'':`<div class="card mu">⚠ التخزين هنا مؤقت: الملفات تُمحى عند إعادة تشغيل الخدمة. ضع مشاريعك الثابتة في مجلد <b class="ltr">seed/</b> أو أضف قرصًا دائمًا.</div>`)+
+    (r.projects.length?r.projects.map(p=>`<div class="card row" data-id="${p.id}" style="cursor:pointer"><span class="dot ${p.installing?'busy':p.running?'on':''}"></span><div class="grow"><b>${esc(p.name)}</b><div class="mu ltr">${esc(p.cmd)}</div></div><div class="mu">${p.running?fmtUp(p.uptime)+(p.mem?` · ${p.mem}MB`:''):'متوقف'}</div></div>`).join(''):'<div class="card mu" style="text-align:center">لا توجد مشاريع بعد. أنشئ مشروعك الأول.</div>');
+    document.querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>open(el.dataset.id))};
+  await draw();S.poll=setInterval(draw,4000)}
+
+/* ---- شاشة المشروع ---- */
+function open(id){S.cur=id;S.tab='console';S.path='';S.chat=[];S.lines=[];S.file=null;clearInterval(S.poll);render()}
+const TABS=[['console','▣','الكونسل'],['files','🗂','الملفات'],['env','🔑','المتغيرات'],['ai','✦','المساعد'],['set','⚙','الإعدادات']];
+async function render(){const st=await call(()=>api('/api/projects/'+S.cur));if(!st)return home();S.st=st;
+  app.innerHTML=topbar(st.name)+`<div class="wrap"><main id="mn"></main></div><nav class="tabs">${TABS.map(t=>`<button data-t="${t[0]}" class="${S.tab===t[0]?'on':''}"><span>${t[1]}</span>${t[2]}</button>`).join('')}</nav>`;
+  bindTop();$('#bk').onclick=home;document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{S.tab=b.dataset.t;S.es?.close();render()});
+  ({console:tConsole,files:tFiles,env:tEnv,ai:tAI,set:tSet})[S.tab]();
+  clearInterval(S.poll);S.poll=setInterval(refreshSt,3000)}
+async function refreshSt(){try{S.st=await api('/api/projects/'+S.cur)}catch{return}paintSt()}
+function paintSt(){const s=S.st,e=$('#stt');if(!e)return;e.innerHTML=`<span class="dot ${s.installing?'busy':s.running?'on':''}"></span> ${s.installing?'يثبّت الحزم…':s.running?'يعمل · '+fmtUp(s.uptime)+(s.mem?` · ${s.mem}MB`:''):'متوقف'}`;
+  const a=$('#bstart'),b=$('#bstop');if(a)a.disabled=s.running;if(b)b.disabled=!s.running}
+const act=(a,m)=>call(async()=>{S.st=await api(`/api/projects/${S.cur}/${a}`,{method:'POST'});paintSt()},m);
+
+function tConsole(){$('#mn').innerHTML=`<div class="card"><div class="row" style="margin-bottom:10px"><b id="stt" class="grow"></b></div>
+<div class="row"><button class="pri" id="bstart">▶ تشغيل</button><button class="dng" id="bstop">■ إيقاف</button><button id="brs">↻ إعادة</button><button id="bin" class="gold">⬇ npm install</button></div></div>
+<div id="term"></div><div class="row" style="margin-top:10px"><button id="ce" class="gold grow">نسخ الأخطاء</button><button id="ca" class="grow">نسخ الكل</button><button id="cl">مسح</button></div>`;paintSt();
+  const term=$('#term');S.lines=[];const add=o=>{S.lines.push(o);const d=document.createElement('div');d.className=o.s;d.textContent=o.l;const near=term.scrollTop+term.clientHeight>term.scrollHeight-60;term.append(d);if(term.children.length>1200)term.firstChild.remove();if(near)term.scrollTop=term.scrollHeight};
+  S.es=new EventSource(`/api/projects/${S.cur}/logs`);S.es.onmessage=e=>{const o=JSON.parse(e.data);add(o);if(o.s==='sys'){if(o.l.startsWith('✖'))snd.err();else if(o.l.startsWith('▶')||o.l.startsWith('✔'))snd.ok()}};
+  $('#bstart').onclick=()=>act('start');$('#bstop').onclick=()=>act('stop');$('#brs').onclick=()=>act('restart');$('#bin').onclick=()=>act('install');
+  $('#ca').onclick=()=>copy(S.lines.map(x=>x.l).join('\n'));
+  $('#ce').onclick=()=>{const bad=S.lines.filter(x=>x.s==='err'||/error|exception|ENOENT|EADDRINUSE|cannot find|✖|failed|فشل/i.test(x.l)).slice(-80);bad.length?copy(bad.map(x=>x.l).join('\n')):toast('لا توجد أخطاء ظاهرة',0)};
+  $('#cl').onclick=async()=>{await api(`/api/projects/${S.cur}/clearlogs`,{method:'POST'});term.innerHTML='';S.lines=[]}}
+
+/* ---- الملفات ---- */
+const joinp=(a,b)=>(a?a+'/':'')+b;
+async function tFiles(){$('#mn').innerHTML=`<div class="card"><div class="crumb" id="cr"></div><div class="row" style="margin-top:10px"><button class="pri" id="up">⬆ رفع</button><button id="nf">+ ملف</button><button id="nd">+ مجلد</button></div><input type="file" id="fi" multiple hidden><input type="file" id="fd" webkitdirectory multiple hidden></div><div class="card" id="fl"></div>`;
+  $('#up').onclick=()=>menu('رفع',[['📄 رفع ملفات',()=>$('#fi').click()],['📁 رفع مجلد كامل',()=>$('#fd').click()]]);
+  $('#fi').onchange=e=>upload(e.target.files);$('#fd').onchange=e=>upload(e.target.files);
+  $('#nf').onclick=async()=>{const n=await ask('اسم الملف الجديد','','index.js');if(n)await call(()=>api(`/api/projects/${S.cur}/files?path=${encodeURIComponent(joinp(S.path,n))}`,{method:'PUT',body:{content:''}}),'تم إنشاء الملف').then(tFiles)};
+  $('#nd').onclick=async()=>{const n=await ask('اسم المجلد الجديد');if(n)await call(()=>api(`/api/projects/${S.cur}/files?op=mkdir&path=${encodeURIComponent(joinp(S.path,n))}`,{method:'POST',body:{}}),'تم إنشاء المجلد').then(tFiles)};
+  const parts=S.path?S.path.split('/'):[];$('#cr').innerHTML=`<a data-p="">/</a>`+parts.map((p,i)=>` / <a data-p="${esc(parts.slice(0,i+1).join('/'))}">${esc(p)}</a>`).join('');
+  $('#cr').querySelectorAll('a').forEach(a=>a.onclick=()=>{S.path=a.dataset.p;tFiles()});
+  const r=await call(()=>api(`/api/projects/${S.cur}/files?path=${encodeURIComponent(S.path)}`));if(!r)return;
+  $('#fl').innerHTML=r.items.length?r.items.map((f,i)=>`<div class="f"><span class="i">${f.dir?'📁':/\.zip$/i.test(f.name)?'🗜':'📄'}</span><span class="n" data-i="${i}">${esc(f.name)}</span><span class="mu">${f.dir?'':f.size>1e6?(f.size/1e6).toFixed(1)+'MB':Math.ceil(f.size/1024)+'KB'}</span><button class="m" data-m="${i}">⋯</button></div>`).join(''):'<div class="mu" style="text-align:center">المجلد فارغ — ارفع ملفاتك أو ملف ZIP.</div>';
+  $('#fl').querySelectorAll('.n').forEach(el=>el.onclick=()=>{const f=r.items[el.dataset.i];f.dir?(S.path=joinp(S.path,f.name),tFiles()):edit(joinp(S.path,f.name))});
+  $('#fl').querySelectorAll('.m').forEach(el=>el.onclick=()=>fileMenu(r.items[el.dataset.m]))}
+function fileMenu(f){const p=joinp(S.path,f.name),q=encodeURIComponent(p),base=`/api/projects/${S.cur}/files`;const it=[];
+  if(!f.dir)it.push(['✎ فتح وتحرير',()=>edit(p)]);
+  if(/\.zip$/i.test(f.name)){it.push(['📦 استخراج هنا',async()=>{const r=await call(()=>api(`${base}?op=extract&path=${q}`,{method:'POST',body:{to:S.path}}));if(r){toast(`تم استخراج ${r.count} ملف`);tFiles()}}]);
+    it.push(['📦 استخراج إلى مجلد باسمه',async()=>{const r=await call(()=>api(`${base}?op=extract&path=${q}`,{method:'POST',body:{to:joinp(S.path,f.name.replace(/\.zip$/i,''))}}));if(r){toast(`تم استخراج ${r.count} ملف`);tFiles()}}])}
+  it.push(['↔ نقل / إعادة تسمية',async()=>{const to=await ask('المسار الجديد (نسبةً لجذر المشروع)',p);if(to&&to!==p){await call(()=>api(`${base}?op=move&path=${q}`,{method:'POST',body:{to}}),'تم');tFiles()}}]);
+  it.push(['🗑 حذف',async()=>{if(await sure(`حذف ${f.name}؟`)){await call(()=>api(`${base}?op=delete&path=${q}`,{method:'POST',body:{}}),'تم الحذف');tFiles()}},'dng']);menu(f.name,it)}
+async function upload(files){files=[...files];if(!files.length)return;let n=0;toast(`جارٍ رفع ${files.length} ملف…`);
+  for(const f of files){const rel=(f.webkitRelativePath||f.name).replace(/\\/g,'/');try{const r=await fetch(`/api/projects/${S.cur}/upload?path=${encodeURIComponent(joinp(S.path,rel))}`,{method:'POST',credentials:'same-origin',body:f});if(!r.ok)throw new Error((await r.json()).error);n++}catch(e){toast(`فشل ${f.name}: ${e.message}`,1)}}
+  toast(`تم رفع ${n} من ${files.length}`);tFiles()}
+async function edit(p){const r=await call(()=>api(`/api/projects/${S.cur}/files?path=${encodeURIComponent(p)}`));if(!r)return;S.file=p;const e=document.createElement('div');e.id='editor';
+  e.innerHTML=`<div class="top"><button id="x">✕</button><div class="brand ltr" style="font-size:17px;direction:ltr;text-align:left">${esc(p)}</div><button class="pri" id="sv">حفظ</button></div><textarea id="ta" spellcheck="false"></textarea>`;document.body.append(e);$('#ta').value=r.content;
+  $('#x').onclick=()=>{S.file=null;e.remove()};$('#sv').onclick=()=>call(()=>api(`/api/projects/${S.cur}/files?path=${encodeURIComponent(p)}`,{method:'PUT',body:{content:$('#ta').value}}),'تم الحفظ');
+  $('#ta').onkeydown=ev=>{if(ev.key==='Tab'){ev.preventDefault();const t=ev.target,s=t.selectionStart;t.setRangeText('  ',s,t.selectionEnd,'end')}}}
+
+/* ---- المتغيرات ---- */
+async function tEnv(){const r=await call(()=>api(`/api/projects/${S.cur}/env`));if(!r)return;const rows=Object.entries(r.env);
+  $('#mn').innerHTML=`<div class="card"><h3>متغيرات البيئة</h3><div class="mu" style="margin-bottom:10px">تصل إلى مشروعك أثناء التشغيل (process.env). أعد التشغيل بعد التعديل.</div><div id="kv"></div><div class="row"><button id="ad">+ متغير</button><button class="pri grow" id="sv">حفظ</button></div>
+  ${r.envFrom.length?`<div class="mu" style="margin-top:12px">متغيرات مُمرَّرة من المنصة: <b class="ltr">${r.envFrom.map(esc).join(', ')}</b></div>`:''}</div>`;
+  const add=(k='',v='')=>{const d=document.createElement('div');d.className='kv';d.innerHTML=`<input placeholder="NAME" value="${esc(k)}"><input placeholder="value" value="${esc(v)}"><button>✕</button>`;d.querySelector('button').onclick=()=>d.remove();$('#kv').append(d)};
+  rows.forEach(x=>add(...x));if(!rows.length)add();$('#ad').onclick=()=>add();
+  $('#sv').onclick=()=>{const env={};document.querySelectorAll('#kv .kv').forEach(d=>{const[i,j]=d.querySelectorAll('input');if(i.value.trim())env[i.value.trim()]=j.value});call(()=>api(`/api/projects/${S.cur}/env`,{method:'PUT',body:{env}}),'تم الحفظ')}}
+
+/* ---- المساعد ---- */
+function tAI(){$('#mn').innerHTML=`<div class="card"><div class="row"><button class="gold grow" id="an">حلّل آخر خطأ في الكونسل</button></div></div><div id="chat"></div>
+<div class="card row"><textarea id="aq" rows="2" placeholder="اسأل عن الكود أو الخطأ…" style="flex:1"></textarea><button class="pri" id="as">إرسال</button></div>`;
+  const draw=()=>{$('#chat').innerHTML=S.chat.length?S.chat.map(m=>`<div class="b ${m.role==='user'?'u':'a'}">${esc(m.content)}</div>`).join(''):'<div class="mu" style="text-align:center">أنا أرى آخر سطور الكونسل والملف المفتوح. اسألني.</div>'};
+  const send=async t=>{if(!t)return;S.chat.push({role:'user',content:t});draw();$('#aq').value='';$('#as').disabled=true;
+    const r=await call(()=>api(`/api/projects/${S.cur}/ai`,{method:'POST',body:{messages:S.chat,file:S.file}}));$('#as').disabled=false;
+    S.chat.push({role:'assistant',content:r?r.reply:'تعذّر الحصول على رد. تحقق من مفتاح الذكاء في الإعدادات.'});draw();window.scrollTo(0,document.body.scrollHeight)};
+  $('#as').onclick=()=>send($('#aq').value.trim());$('#an').onclick=()=>send('حلّل آخر خطأ في الكونسل واشرح السبب والحل خطوة بخطوة.');draw()}
+
+/* ---- الإعدادات ---- */
+async function tSet(){const s=S.st,g=await call(()=>api('/api/settings'))||{};
+  $('#mn').innerHTML=`<div class="card"><h3>المشروع</h3><label>الاسم</label><input id="sn1" value="${esc(s.name)}"><label>أمر التشغيل</label><input id="sc" class="ltr" value="${esc(s.cmd)}">
+<div class="sw"><span>تشغيل تلقائي عند إقلاع المنصة</span><input type="checkbox" id="sa" ${s.autostart?'checked':''}></div><div class="sw"><span>إعادة تشغيل تلقائية عند الانهيار</span><input type="checkbox" id="sr" ${s.autorestart?'checked':''}></div>
+<div class="row"><button class="pri grow" id="sv">حفظ</button><button class="dng" id="dl">حذف المشروع</button></div></div>
+<div class="card"><h3>المساعد الذكي</h3><label>المزوّد</label><select id="gp"><option value="anthropic">Claude (Anthropic)</option><option value="openai">متوافق مع OpenAI (OpenAI, OpenRouter, Gemini…)</option></select>
+<label>المفتاح ${g.hasKey?'<span style="color:var(--ok)">(محفوظ ✓)</span>':''}</label><input id="gk" class="ltr" type="password" placeholder="${g.hasKey?'اتركه فارغًا للإبقاء عليه':'API key'}"><label>الموديل (اختياري)</label><input id="gm" class="ltr" value="${esc(g.aiModel||'')}">
+<label>رابط API (لمزوّد OpenAI فقط)</label><input id="gb" class="ltr" value="${esc(g.aiBase||'')}" placeholder="https://api.openai.com/v1/chat/completions"><button class="pri" id="gs" style="margin-top:12px">حفظ إعدادات الذكاء</button></div>`;
+  $('#gp').value=g.aiProvider||'anthropic';
+  $('#sv').onclick=()=>call(()=>api('/api/projects/'+S.cur,{method:'PATCH',body:{name:$('#sn1').value,cmd:$('#sc').value,autostart:$('#sa').checked,autorestart:$('#sr').checked}}),'تم الحفظ').then(render);
+  $('#dl').onclick=async()=>{if(await sure('حذف المشروع وكل ملفاته نهائيًا؟')){await call(()=>api('/api/projects/'+S.cur,{method:'DELETE'}),'تم الحذف');home()}};
+  $('#gs').onclick=()=>call(()=>api('/api/settings',{method:'PUT',body:{aiProvider:$('#gp').value,aiKey:$('#gk').value,aiModel:$('#gm').value,aiBase:$('#gb').value}}),'تم الحفظ')}
+
+api('/api/me').then(home).catch(showLogin);
+</script>
+</body>
+</html>
