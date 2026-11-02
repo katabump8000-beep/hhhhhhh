@@ -251,6 +251,13 @@ if (fs.existsSync(SEED)) for (const d of fs.readdirSync(SEED, { withFileTypes: t
   let conf = {}; try { conf = JSON.parse(fs.readFileSync(path.join(pdir(d.name), 'platform.json'), 'utf8')); } catch {}
   setMeta(d.name, { name: conf.name || d.name, cmd: conf.cmd || 'npm start', autostart: conf.autostart !== false, autorestart: true, env: conf.env || {}, envFrom: conf.envFrom || [], created: Date.now() });
 }
+/* ---------- منع نوم Render: المنصة تزور رابطها العام كل 8 دقائق (تُحسب زيارة خارجية فلا تنام) ---------- */
+const SELF_URL = (process.env.RENDER_EXTERNAL_URL || process.env.SELF_URL || '').replace(/\/$/, '');
+if (SELF_URL) {
+  const ping = () => fetch(SELF_URL + '/healthz', { signal: AbortSignal.timeout(20000) }).then((r) => console.log('keep-alive', r.status)).catch((e) => console.log('keep-alive فشل:', e.message));
+  setInterval(ping, 8 * 60 * 1000);
+  setTimeout(ping, 30000);
+}
 const PORT = Number(process.env.PORT || 8080);
 server.listen(PORT, () => { console.log('الجيسي يعمل على المنفذ', PORT); for (const id of allIds()) if (getMeta(id).autostart) start(id).catch((e) => sys(id, '✖ ' + e.message)); });
 const bye = async () => { await Promise.all(allIds().map(stop)); process.exit(0); };
