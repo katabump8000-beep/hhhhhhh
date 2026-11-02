@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: jes-host
+    runtime: node
+    plan: free
+    buildCommand: echo ok
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false
