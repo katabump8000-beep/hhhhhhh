@@ -1,0 +1,1 @@
+{ "name": "push-server", "cmd": "node server.js", "autostart": true, "envFrom": ["FIREBASE_SERVICE_ACCOUNT"] }
